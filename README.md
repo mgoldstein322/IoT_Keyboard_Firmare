@@ -11,13 +11,17 @@ To use these files, do the following:
 > Note: This WILL replace files located in the tmk_core directory. Make sure to backup that folder before using the firmware.
 2. If you haven't already or wish to compile the code, run `qmk compile -kb IoT_Keyboard -km default` in the QMK MSYS terminal in the qmk_firmware directory
 3. In the QMK command line, run `make -j [NUM_THREADS] IoT_Keyboard:default:dfu` to upload the firmware to the keyboard.
+> Make sure to press the reset button on the PCB or the microcontroller to enable flashing.
 
 ## Completed
 - Layout of IoT Keyboard completed
 - Working basic Bluetooth driver for Elite C V4 microcontroller and HC-05 Bluetooth module
-    - As of 3/29, the driver only sends raw keycodes through the `register_code()` function in `action.c`
+- ASCII values are sent through Bluetooth
 
 ## TODO
 - Clean up Bluetooth implementation
     - Make the IoT Keyboard use its own main (use a copy of LUFA framework)
-- Figure out how to send proper characters through Bluetooth
+    
+## Limitations
+- As certain keyboard functions such as shortcuts and Caps Lock are handled by the operating system, no ASCII values or ASCII modified values will be sent through Bluetooth with the following keys: Caps Lock, LCtrl, RCtrl, LAlt, RAlt, RWin/Function, LWin, Menu.
+- Keycodes are sent through keyboard reports in QMK, whereby one is sent whenever the keyboard status chanages. This includes when you both press and lift a key on the keyboard. The Bluetooth firmware reads the keyboard report everytime it's sent and interprets it and decides what/when to send. Behavior when multiple keys is untested/unknown.

@@ -734,9 +734,6 @@ void process_action(keyrecord_t *record, action_t action) {
  * FIXME: Needs documentation.
  */
 void register_code(uint8_t code) {
-    // Send keycode through bluetooth
-    // TODO: CHANGE AND FIX THIS IMPLEMENTATION (THIS DOES NOT WORK AS INTENTED)
-    serial_send(code);
     if (code == KC_NO) {
         return;
     }
